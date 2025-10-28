@@ -51,8 +51,12 @@ class VoxelControls {
         const intersects = this.raycaster.intersectObjects(objectsToIntersect);
 
         if (intersects.length > 0) {
-            this.rollOverMesh.visible = true;
             const intersect = intersects[0];
+            if (!intersect.face) {
+                this.rollOverMesh.visible = false;
+                return;
+            }
+            this.rollOverMesh.visible = true;
             
             const newPos = new THREE.Vector3();
             if (this.isShiftDown) { // Remove mode
@@ -87,6 +91,9 @@ class VoxelControls {
         
         if (intersects.length > 0) {
             const intersect = intersects[0];
+            if (!intersect.face) {
+                return;
+            }
             
             if (this.isShiftDown) {
                 // Remove voxel
@@ -108,4 +115,3 @@ class VoxelControls {
 }
 
 export default VoxelControls;
-
